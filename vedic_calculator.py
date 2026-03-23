@@ -156,11 +156,12 @@ def calculate_vedic_chart(dob_str: str, time_str: str, lat: float, lon: float, t
     # --- Build enriched planet data ---
     planets_output = {}
     planets_for_yoga = {}
+    planets_in_signs = {name: rp["sign_idx"] for name, rp in raw_planets.items()}
 
     for name, rp in raw_planets.items():
         house = _house_from_lagna(rp["sign_idx"], asc_sign_idx)
         nak = get_nakshatra(rp["lon"])
-        dignity = get_dignity(name, rp["sign"], rp["degree"])
+        dignity = get_dignity(name, rp["sign"], rp["degree"], planets_in_signs)
         is_combust = check_combustion(name, rp["lon"], sun_lon, rp["is_retrograde"]) if sun_lon is not None else False
         has_digbala = get_digbala(name, house)
 
@@ -204,7 +205,7 @@ def calculate_vedic_chart(dob_str: str, time_str: str, lat: float, lon: float, t
     yogas = detect_yogas(planets_for_yoga, asc_sign)
 
     # --- Panchang ---
-    panchang_data = calculate_panchang(jd, sun_lon, moon_lon)
+    panchang_data = calculate_panchang(jd, sun_lon, moon_lon, lat, lon)
 
     # --- Assemble output ---
     chart_data = {
