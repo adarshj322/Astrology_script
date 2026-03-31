@@ -5,7 +5,7 @@ Tests all modules against KNOWN reference values computed from two horoscopes.
 
 Reference Chart 1: B.V. Raman Standard Horoscope
   Born 16-Oct-1918, 14:20 IST, Bangalore (12.9716N, 77.5946E)
-  Cross-validated against VedAstro (Lahiri ayanamsha) reference values.
+  Cross-validated against reference software (Lahiri ayanamsha) reference values.
 
 Reference Chart 2: Delhi Native
   Born 15-Apr-1990, 14:30 IST, Delhi (28.6139N, 77.2090E)
@@ -14,7 +14,7 @@ Testing Strategy:
   - Cast charts with known birth data
   - Assert SPECIFIC planetary positions (sign, degree, nakshatra)
   - Assert SPECIFIC dignities, houses, dashas, yogas
-  - Cross-validate with B.V. Raman / VedAstro published values
+  - Cross-validate with B.V. Raman / reference software published values
   - Unit-test pure functions (divisional charts, nakshatra math)
 """
 
@@ -236,17 +236,17 @@ class TestSignAndDegree(unittest.TestCase):
 
 # ===================================================================
 # 4. DIVISIONAL CHARTS -- pure function tests
-#    Cross-validated against VedAstro D2/D3 for BVR chart
+#    Cross-validated against reference software D2/D3 for BVR chart
 # ===================================================================
 class TestDivisionalCharts(unittest.TestCase):
 
-    # --- D2 (Hora) --- VedAstro: Sun=Leo, Moon=Leo, Jupiter=Cancer
+    # --- D2 (Hora) --- reference software: Sun=Leo, Moon=Leo, Jupiter=Cancer
     def test_d2_sun_bvr_leo(self):
-        """Sun at Virgo 29.46 -> D2 Leo (VedAstro confirmed)."""
+        """Sun at Virgo 29.46 -> D2 Leo (reference software confirmed)."""
         self.assertEqual(calculate_d2_hora(5 * 30 + 29.46), "Leo")
 
     def test_d2_jupiter_bvr_cancer(self):
-        """Jupiter at Gemini 22.56 -> D2 Cancer (VedAstro confirmed)."""
+        """Jupiter at Gemini 22.56 -> D2 Cancer (reference software confirmed)."""
         self.assertEqual(calculate_d2_hora(2 * 30 + 22.56), "Cancer")
 
     def test_d2_odd_sign_first_half(self):
@@ -261,21 +261,21 @@ class TestDivisionalCharts(unittest.TestCase):
     def test_d2_even_sign_second_half(self):
         self.assertEqual(calculate_d2_hora(50.0), "Leo")
 
-    # --- D3 (Drekkana) --- VedAstro: Sun=Taurus, Moon=Aquarius, Mars=Pisces, Saturn=Leo
+    # --- D3 (Drekkana) --- reference software: Sun=Taurus, Moon=Aquarius, Mars=Pisces, Saturn=Leo
     def test_d3_sun_bvr_taurus(self):
-        """Sun at Virgo 29.46 -> D3 Taurus (VedAstro confirmed)."""
+        """Sun at Virgo 29.46 -> D3 Taurus (reference software confirmed)."""
         self.assertEqual(calculate_d3_drekkana(5 * 30 + 29.46), "Taurus")
 
     def test_d3_moon_bvr_aquarius(self):
-        """Moon at Aquarius 9.77 -> D3 Aquarius (VedAstro confirmed)."""
+        """Moon at Aquarius 9.77 -> D3 Aquarius (reference software confirmed)."""
         self.assertEqual(calculate_d3_drekkana(10 * 30 + 9.77), "Aquarius")
 
     def test_d3_saturn_bvr_leo(self):
-        """Saturn at Leo 2.93 -> D3 Leo (VedAstro confirmed)."""
+        """Saturn at Leo 2.93 -> D3 Leo (reference software confirmed)."""
         self.assertEqual(calculate_d3_drekkana(4 * 30 + 2.93), "Leo")
 
     def test_d3_mars_bvr_pisces(self):
-        """Mars at Scorpio 18.01 -> D3 Pisces (VedAstro confirmed)."""
+        """Mars at Scorpio 18.01 -> D3 Pisces (reference software confirmed)."""
         self.assertEqual(calculate_d3_drekkana(7 * 30 + 18.01), "Pisces")
 
     # --- D9 (Navamsha) ---
@@ -430,13 +430,13 @@ class TestHouseFromLagna(unittest.TestCase):
 
 
 # ===================================================================
-# 7. BVR CHART -- PLANETARY POSITIONS (cross-ref VedAstro Lahiri)
-#    VedAstro reference: Sun=Virgo 29deg28', Moon=Aquarius 9deg46',
+# 7. BVR CHART -- PLANETARY POSITIONS (cross-ref reference software Lahiri)
+#    reference software reference: Sun=Virgo 29deg28', Moon=Aquarius 9deg46',
 #    Mars=Scorpio 18deg01', Mercury=Libra 0deg04', Jupiter=Gemini 22deg34',
 #    Venus=Virgo 19deg43', Saturn=Leo 2deg56'
 # ===================================================================
 class TestBVRPlanetPositions(unittest.TestCase):
-    """Assert planetary signs and degrees against VedAstro Lahiri values.
+    """Assert planetary signs and degrees against reference software Lahiri values.
     Tolerance: 0.5 deg for degrees (minor ephemeris differences)."""
 
     TOLERANCE = 0.5
@@ -493,7 +493,7 @@ class TestBVRPlanetPositions(unittest.TestCase):
 
 # ===================================================================
 # 8. BVR CHART -- LAGNA
-#    VedAstro: House 1 middle ~294deg57' = Capricorn ~24deg57'
+#    reference software: House 1 middle ~294deg57' = Capricorn ~24deg57'
 # ===================================================================
 class TestBVRLagna(unittest.TestCase):
 
@@ -677,7 +677,7 @@ class TestBVRPanchang(unittest.TestCase):
 # ===================================================================
 # 15. BVR CHART -- DASHAS
 #    Moon in Shatabhisha (lord = Rahu) -> first dasha = Rahu
-#    VedAstro: Mercury dasha begins ~1964 (Raman ayanamsha)
+#    reference software: Mercury dasha begins ~1964 (Raman ayanamsha)
 # ===================================================================
 class TestBVRDashas(unittest.TestCase):
 
@@ -1006,7 +1006,7 @@ class TestBVRYogas(unittest.TestCase):
 
 # ===================================================================
 # 27. BVR CHART -- SHADBALA
-#    VedAstro Ishta/Kashta (Raman ayanamsha, pg 109):
+#    reference software Ishta/Kashta (Raman ayanamsha, pg 109):
 #    Sun: ishta=8.25, kashta=46.13  (our Lahiri values differ)
 # ===================================================================
 class TestBVRShadbala(unittest.TestCase):
@@ -1249,10 +1249,10 @@ class TestTransit(unittest.TestCase):
 
 
 # ===================================================================
-# 34. VEDASTRO CROSS-VALIDATION -- D2/D3 signs
+# 34. reference software CROSS-VALIDATION -- D2/D3 signs
 # ===================================================================
-class TestVedAstroCrossValidation(unittest.TestCase):
-    """Cross-validate D2/D3 signs against VedAstro computed values (Lahiri)."""
+class TestReferenceCrossValidation(unittest.TestCase):
+    """Cross-validate D2/D3 signs against reference software computed values (Lahiri)."""
 
     def test_d2_hora_all_planets(self):
         expected = {
@@ -1276,7 +1276,7 @@ class TestVedAstroCrossValidation(unittest.TestCase):
             self.assertEqual(actual, exp_sign,
                              f"D3 {planet}: expected {exp_sign}, got {actual}")
 
-    def test_planet_signs_match_vedastro(self):
+    def test_planet_signs_match_reference(self):
         expected = {
             "Sun": "Virgo", "Moon": "Aquarius", "Mars": "Scorpio",
             "Mercury": "Libra", "Jupiter": "Gemini", "Venus": "Virgo",
