@@ -1,5 +1,10 @@
 # DashaFlow
 
+[![PyPI version](https://img.shields.io/pypi/v/dashaflow)](https://pypi.org/project/dashaflow/)
+[![CI](https://github.com/adarshj322/dashaflow/actions/workflows/ci.yml/badge.svg)](https://github.com/adarshj322/dashaflow/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python](https://img.shields.io/pypi/pyversions/dashaflow)](https://pypi.org/project/dashaflow/)
+
 A Vedic astrology calculation engine for Python, built on the **Swiss Ephemeris** with **Sidereal Lahiri** ayanamsha. Rooted in *Brihat Parashara Hora Shastra* (BPHS) and B.V. Raman's *Hindu Predictive Astrology*.
 
 ```bash
